@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compilar com graphics.h",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe",
+        "-IC:\\MinGW\\include",
+        "-LC:\\MinGW\\lib",
+        "-lbgi",
+        "-lgdi32",
+        "-lcomdlg32",
+        "-luuid",
+        "-loleaut32",
+        "-lole32"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Compila usando graphics.h (WinBGIm)"
+    }
+  ]
+}
