@@ -17,5 +17,7 @@ int main()
     {
         int xmouse = mousex(), ymouse = mousey();
         circle(xmouse,ymouse, 10);
-    }while(!kbhit());
+
+    }
+    while(!kbhit());
 }
