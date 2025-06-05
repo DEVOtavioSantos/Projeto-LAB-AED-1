@@ -11,7 +11,7 @@ int main()
 {
     initwindow(SCREEN_WIDTH,SCREEN_HEIGHT,"Tester");//Cria uma janela
     int sizeX = getmaxx(), sizeY = getmaxy();//Define variaveis referente ao tamanho da janela
-
+    int score =0;
 
 
     do //Loop principal do jogo, onde faz que o jogo faz rodar ---Game Loop---
@@ -41,7 +41,9 @@ int main()
             if (ymouse > sizeY/2 && ymouse <(sizeY/2)+tamanho)
             {
                 setcolor(RED);
-                outtextxy(sizeX/2, (sizeY/2)-200,"Acertou");
+                outtextxy(sizeX/2, (sizeY/2)-200,"Acertou");    //o que ele faz quando o botão for clicado
+                xmouse = 0; ymouse =0;
+                score = score +1;
             }
 
         }
@@ -52,6 +54,7 @@ int main()
 
 
     }while(!kbhit());
+    printf("Score: %d", score);
 
     closegraph();
 
