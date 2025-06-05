@@ -20,11 +20,15 @@ int main()
 
 
 
-        getmouseclick(WM_LBUTTONDOWN, xmouse, ymouse);
-
-
-
+        while(ismouseclick(WM_LBUTTONDOWN))
+        {
+            getmouseclick(WM_LBUTTONDOWN, xmouse, ymouse);
             readimagefile("joao.jpg",xmouse-20,ymouse-15,xmouse+20,ymouse+20);
+            delay(200);
+            cleardevice();
+        }
+
+
 
                 setcolor(RED);
 
@@ -37,7 +41,8 @@ int main()
             if (ymouse > sizeY/2 && ymouse <(sizeY/2)+tamanho)
             {
                 setcolor(RED);
-                outtextxy(10,10,"Acertou");
+                outtextxy(sizeX/2, (sizeY/2)-200,"Acertou");
+
             }
         }
 
