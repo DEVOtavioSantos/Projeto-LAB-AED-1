@@ -57,9 +57,10 @@ int main()
     while(!kbhit())
     {
 
-        DesenharRaquete();
-        DesenhaBola();
         DesenhaTijolo();
+        DesenhaBola();
+
+        DesenharRaquete();
 
     }
     closegraph();
@@ -84,7 +85,8 @@ void DesenharRaquete()
 
 void DesenhaBola()
 {
-
+    setcolor(BLUE);
+    setfillstyle(1,3);
     fillellipse(bolaX,bolaY,Tam_Bola, Tam_Bola);
 
     bolaX += bolaDX;
@@ -143,9 +145,13 @@ void DesenhaTijolo()
             bar(x,y,x+Tijolo_Largura,y +Tijolo_Altura);
             if(bolaX + Tam_Bola > x-1 && bolaX - Tam_Bola < x + Tijolo_Largura +1 && bolaY + Tam_Bola > y+1 && bolaY - Tam_Bola < y + Tijolo_Altura+1)
             {
-                tijolo[l][c] = 0;
+
 
                 bolaDY = -bolaDY;
+                bolaDX = -bolaDX;
+                tijolo[l][c] = 0;
+                return;
+
 
 
             }
