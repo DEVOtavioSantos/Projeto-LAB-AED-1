@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphics.h>
+<<<<<<< Updated upstream
 
 //Defines de Criação de tela
 #define LarguraTela 1024
@@ -33,15 +34,54 @@ int main()
 
 
     initwindow(LarguraTela,AlturaTela, Title,monitorX,monitorY);
+=======
+#include <dos.h>
+#include <windows.h>
+
+#define larguraTela 800
+#define alturaTela 600
+
+
+int main()
+{
+    initwindow(larguraTela,alturaTela,"Teste");
+>>>>>>> Stashed changes
     int sizeX = getmaxx(), sizeY = getmaxy();
 
     while(!kbhit())
     {
+<<<<<<< Updated upstream
         DesenharRaquete();
         DesenhaBola();
     }
     closegraph();
     return 0;
+=======
+        setfillstyle(1,1);
+        bar(sizeX/2,(sizeY/2)+200,(sizeX/2)+100,(sizeY/2)+250);
+
+        int Xmouse = mousex(), Ymouse = mousey();
+
+
+        getmouseclick(WM_LBUTTONDOWN, Xmouse, Ymouse);
+
+
+            if (Xmouse > sizeX/2 && Xmouse < (sizeX/2)+100 )
+            {
+                if (Ymouse > (sizeY/2)+200 && Ymouse < (sizeY/2)+250  )
+                {
+
+                    outtextxy(20,10,"Fell");
+
+
+                }
+
+            }
+        }
+
+closegraph();
+return 0;
+>>>>>>> Stashed changes
 }
 
 
