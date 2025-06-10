@@ -13,17 +13,32 @@
 #define Cima_Raquete 550
 #define Abaixo_Raquete 560
 
+//Defines da bola
+#define Tam_Bola 15
+#define Vel_bola 2
+
+
+void CentralizarCanvas(int monitorX, int monitorY);
 
 void DesenharRaquete();
+void DesenhaBola();
 
 int main()
 {
-    initwindow(LarguraTela,AlturaTela, Title);
+    //A janela abrira ao centro da tela
+    int monitorX, monitorY;
+    monitorX = (getmaxwidth()/2) - (LarguraTela/2);
+    monitorY = (getmaxheight()/2) - (AlturaTela/2);
+
+
+
+    initwindow(LarguraTela,AlturaTela, Title,monitorX,monitorY);
     int sizeX = getmaxx(), sizeY = getmaxy();
 
     while(!kbhit())
     {
         DesenharRaquete();
+        DesenhaBola();
     }
     closegraph();
     return 0;
@@ -40,4 +55,23 @@ void DesenharRaquete()
     delay(1);
     cleardevice();
 
+}
+
+void DesenhaBola()
+{
+    int x=512, y = 288;
+    fillellipse(x,y,Tam_Bola, Tam_Bola);
+
+
+
+
+
+
+
+}
+
+void CentralizarCanvas(int monitorX, int monitorY)
+{
+    monitorX = (getmaxwidth()/2) - (LarguraTela/2);
+    monitorY = (getmaxheight()/2) - (AlturaTela/2);
 }
