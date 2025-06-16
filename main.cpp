@@ -17,7 +17,7 @@
 
 //Defines da bola
 #define Tam_Bola 15
-#define Vel_bola 8
+#define Vel_bola 2
 
 //defines dos tijolos
 #define Qtd_Linha 4
@@ -41,6 +41,9 @@ int pontos;
 void DesenharRaquete();
 void DesenhaBola();
 void DesenhaTijolo();
+void geratijolos();
+void ValidaColisaoBola();
+void ValidaColisaoComRaquete();
 
 int main()
 {
@@ -49,19 +52,25 @@ int main()
     monitorX = (getmaxwidth()/2) - (LarguraTela/2);
     monitorY = (getmaxheight()/2) - (AlturaTela/2);
 
-
+    char texto[50];
 
     initwindow(LarguraTela,AlturaTela, Title,monitorX,monitorY);
 
     int sizeX = getmaxx(), sizeY = getmaxy();
-
+    geratijolos();
     while(!kbhit())
     {
 
         DesenhaTijolo();
         DesenhaBola();
-
+        ValidaColisaoBola();
+        ValidaColisaoComRaquete();
         DesenharRaquete();
+
+
+        sprintf(texto,"Onde a bola está: X: %d | Y: %d", bolaX,bolaY);
+        outtextxy(10,10,texto);
+
 
     }
     closegraph();
@@ -79,9 +88,6 @@ void DesenharRaquete()
 
     setfillstyle(1,3);
     bar(Esq_raquete,Cima_Raquete,Dir_Raquete,Abaixo_Raquete);
-    delay(35);
-    cleardevice();
-
 }
 
 void DesenhaBola()
@@ -90,10 +96,13 @@ void DesenhaBola()
     setfillstyle(1,3);
     fillellipse(bolaX,bolaY,Tam_Bola, Tam_Bola);
 
-    bolaX -= bolaDX;
+
+
+    bolaX += bolaDX;
     bolaY += bolaDY;
-
-
+}
+void ValidaColisaoBola()
+{
     if(bolaX - Tam_Bola <= 0 || bolaX + Tam_Bola >= LarguraTela)
     {
         bolaDX = -bolaDX;
@@ -107,23 +116,86 @@ void DesenhaBola()
         Beep(440,100);
     }
 
-    if (bolaY - Tam_Bola >= AlturaTela)
+    if (bolaY - Tam_Bola > AlturaTela +Tam_Bola)
     {
         setcolor(RED);
         settextstyle(4,HORIZ_DIR, 4);
         outtextxy(LarguraTela/2,AlturaTela/2, "Game Over");
+
     }
 
-    if(bolaX >= mousex()-Tam_Raquete && bolaX <= mousex()+ Tam_Raquete)
+
+}
+
+void ValidaColisaoComRaquete()
+{
+    // Colisão com centro a esquerda
+    if(bolaX <= mousex() && bolaX >= mousex()-(Tam_Raquete/2))
     {
-        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY = Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
+        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY - Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
+        {
+            bolaY = Cima_Raquete - Tam_Bola - 1;
+            bolaDY = -bolaDY -4;
+            bolaDX = -bolaDX +2;
+            Beep(440,100);
+        }
+    }
+
+    //Colisão com centro a Direita
+    if(bolaX >= mousex()&& bolaX <= mousex()+ (Tam_Raquete/2))
+    {
+        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY - Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
+        {
+            bolaY = Cima_Raquete - Tam_Bola - 1;
+            bolaDY = -bolaDY -4;
+            bolaDX += +bolaDX +2;
+
+            Beep(440,100);
+        }
+    }
+
+    //Colisão com a ponta esquerda
+    if(bolaX < mousex() - (Tam_Raquete/2) && bolaX >= mousex() - Tam_Raquete)
+    {
+        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY - Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
+        {
+            bolaY = Cima_Raquete - Tam_Bola - 1;
+            bolaDY = -bolaDY -2;
+            bolaDX = -bolaDX + 4;
+            Beep(440,100);
+        }
+    }
+
+
+
+    //colisão com a ponta direita
+    if(bolaX > mousex() + (Tam_Raquete/2) &&  bolaX < mousex() + Tam_Raquete)
+    {
+        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY - Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
+        {
+            bolaY = Cima_Raquete - Tam_Bola - 1;
+            bolaDY = -bolaDY -2;
+            bolaDX = -bolaDX +4;
+            Beep(440,100);
+        }
+    }
+
+    //colisao meio
+    if (bolaX == mousex())
+    {
+        if((bolaY + Tam_Bola)> Cima_Raquete && (bolaY - Tam_Bola) <= Cima_Raquete+(Cima_Raquete-Abaixo_Raquete) )
         {
             bolaY = Cima_Raquete - Tam_Bola - 1;
             bolaDY = -bolaDY;
             Beep(440,100);
         }
     }
+
 }
+
+
+
+
 
 
 void DesenhaTijolo()
@@ -134,7 +206,7 @@ void DesenhaTijolo()
         for (int c =0;c<Qtd_Coluna;c++)
         {
 
-            tijolo[l][c] = 1;
+
             if (!tijolo[l][c])
             {
                 continue;
@@ -162,6 +234,19 @@ void DesenhaTijolo()
             }
 
 
+        }
+    }
+
+}
+
+void geratijolos()
+{
+
+    for (int l =0; l<Qtd_Linha;l++)
+    {
+        for(int c =0; c< Qtd_Coluna;c++)
+        {
+            tijolo[l][c] = 1;
         }
     }
 
