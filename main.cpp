@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphics.h>
+#include <windows.h>
 
 
 //Defines de Criação de tela
@@ -89,19 +90,21 @@ void DesenhaBola()
     setfillstyle(1,3);
     fillellipse(bolaX,bolaY,Tam_Bola, Tam_Bola);
 
-    bolaX += bolaDX;
+    bolaX -= bolaDX;
     bolaY += bolaDY;
 
 
     if(bolaX - Tam_Bola <= 0 || bolaX + Tam_Bola >= LarguraTela)
     {
         bolaDX = -bolaDX;
+        Beep(440,100);
     }
 
     if (bolaY - Tam_Bola <=0)
     {
         bolaDY = -bolaDY;
         bolaY = Tam_Bola +1;
+        Beep(440,100);
     }
 
     if (bolaY - Tam_Bola >= AlturaTela)
@@ -117,6 +120,7 @@ void DesenhaBola()
         {
             bolaY = Cima_Raquete - Tam_Bola - 1;
             bolaDY = -bolaDY;
+            Beep(440,100);
         }
     }
 }
@@ -150,6 +154,7 @@ void DesenhaTijolo()
                 bolaDY = -bolaDY;
                 bolaDX = -bolaDX;
                 tijolo[l][c] = 0;
+                Beep(440,100);
                 return;
 
 
